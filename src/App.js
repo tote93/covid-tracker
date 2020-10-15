@@ -14,6 +14,7 @@ import Map from "./components/Map";
 import Table from "./components/Table";
 import { prettyPrintStats, sortData } from "./utils";
 import "leaflet/dist/leaflet.css";
+import PieGraph from "./components/PieGraph";
 function App() {
   const [countries, setCountries] = useState([]);
   const [mapCountries, setMapCountries] = useState([]);
@@ -111,18 +112,71 @@ function App() {
           center={mapCenter}
           zoom={mapZoom}
         />
+        <h3>
+          {countryInfo.country ? countryInfo.country : "Worlwide"} new{" "}
+          {casesTypes}
+        </h3>
+        <LineGraph casesType={casesTypes} countryCode={country} />
+        <div className="app__cards">
+          <Card>
+            <CardContent>
+              <h3>Live Cases by Country</h3>
+              <Table countries={tableData} />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent>
+              <h3>Number of cases per million by Country</h3>
+              <Table countries={tableData} column="casesPerOneMillion" />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent>
+              <h3>Number of recovered per million by Country</h3>
+              <Table countries={tableData} column="recoveredPerOneMillion" />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent>
+              <h3>Number of deaths per million by Country</h3>
+              <Table countries={tableData} column="deathsPerOneMillion" />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent>
+              <h3>Today Cases by Country</h3>
+              <Table countries={tableData} column="todayCases" />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent>
+              <h3>Today Recovered by Country</h3>
+              <Table countries={tableData} column="todayRecovered" />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent>
+              <h3>Today Deaths by Country</h3>
+              <Table countries={tableData} column="todayDeaths" />
+            </CardContent>
+          </Card>
+        </div>
+        <div className="app_graphs">
+          <div className="app__graphsPie">
+            <PieGraph
+              dataset={countryInfo}
+              label1="cases"
+              label2="population"
+            />
+          </div>
+          <div className="app__graphsPie">
+            <PieGraph dataset={countryInfo} label1="recovered" label2="cases" />
+          </div>
+          <div className="app__graphsPie">
+            <PieGraph dataset={countryInfo} label1="deaths" label2="cases" />
+          </div>
+        </div>
       </div>
-      <Card className="app__right">
-        <CardContent>
-          <h3>Live Cases by Country</h3>
-          <Table countries={tableData} />
-          <h3>
-            {countryInfo.country ? countryInfo.country : "Worlwide"} new{" "}
-            {casesTypes}
-          </h3>
-          <LineGraph casesType={casesTypes} />
-        </CardContent>
-      </Card>
     </div>
   );
 }

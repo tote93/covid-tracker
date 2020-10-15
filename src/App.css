@@ -27,3 +27,29 @@
 .app__dropdown {
     background-color: #fff;
 }
+.app__cards{ 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px;
+    flex-wrap: wrap;
+}
+.app__cards > div {
+    margin: 10px;
+}
+.app_graphs{
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+}
+.app__graphsPie{
+    height: 200px;
+    width: 200px;
+}
+@media (max-width: 600px) {
+    .app_graphs,
+    .app {
+        flex-direction: column;
+    }
+}

@@ -47,7 +47,7 @@ const options = {
   },
 };
 
-function LineGraph({ casesType = "cases" }) {
+function LineGraph({ countryCode, casesType = "cases" }) {
   const [data, setData] = useState([]);
   const buildChartData = (data, casesType) => {
     const chartData = [];
@@ -67,12 +67,16 @@ function LineGraph({ casesType = "cases" }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get("/historical/all?lastdays=120");
-      const chartData = buildChartData(response.data, casesType);
+      const url = countryCode === "worldwide" ? "all" : `${countryCode}`;
+      const response = await axios.get(`/historical/${url}?lastdays=60`);
+      const chartData =
+        countryCode === "worldwide"
+          ? buildChartData(response.data, casesType)
+          : buildChartData(response.data.timeline, casesType);
       setData(chartData);
     };
     fetchData();
-  }, [casesType]);
+  }, [casesType, countryCode]);
 
   return (
     <div>

@@ -16,9 +16,9 @@ const casesTypeColors = {
   },
 };
 
-export const sortData = (data) => {
+export const sortData = (data, col = "cases") => {
   const sortedData = [...data];
-  return sortedData.sort((a, b) => b.cases - a.cases);
+  return sortedData.sort((a, b) => b[col] - a[col]);
 };
 
 export const showDataOnMap = (data, casesType = "cases") =>
